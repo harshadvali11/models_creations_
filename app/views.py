@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from app.models import *
+from django.db.models.functions import Length
 
 def display_topics(request):
     QSTO=Topic.objects.all()
@@ -11,6 +12,38 @@ def display_topics(request):
 
 def display_webpages(request):
     QSWO=Webpage.objects.all()
+
+    QSWO=Webpage.objects.filter(pk=3)
+    QSWO=Webpage.objects.filter(topic_name='Cricket')
+    QSWO=Webpage.objects.exclude(topic_name='Cricket')
+    
+    QSWO=Webpage.objects.all()[2:5:1]
+    
+    QSWO=Webpage.objects.all()[5:6:]
+    
+    QSWO=Webpage.objects.all().order_by('name')
+    QSWO=Webpage.objects.filter(topic_name='Cricket').order_by('name')
+    QSWO=Webpage.objects.all().order_by('-name')
+    QSWO=Webpage.objects.all().order_by(Length('name'))
+
+    QSWO=Webpage.objects.all().order_by(Length('name').desc())
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     d={'QSWO':QSWO}
     return render(request,'display_webpages.html',d)
 
