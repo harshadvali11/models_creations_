@@ -27,7 +27,12 @@ def display_webpages(request):
     QSWO=Webpage.objects.all().order_by(Length('name'))
 
     QSWO=Webpage.objects.all().order_by(Length('name').desc())
-    
+    QSWO=Webpage.objects.filter(name__startswith='v')
+
+    QSWO=Webpage.objects.all()
+    QSWO=Webpage.objects.filter(url__endswith='in')
+    QSWO=Webpage.objects.filter(url__contains='R')
+    QSWO=Webpage.objects.exclude(url__contains='R')
 
 
 
@@ -50,8 +55,24 @@ def display_webpages(request):
 
 def display_access(request):
     QSAO=AccessRecord.objects.all()
+    QSAO=AccessRecord.objects.filter(date='2022-10-10')
+    QSAO=AccessRecord.objects.filter(date__gte='2022-10-10')
+    QSAO=AccessRecord.objects.filter(date__lte='2022-10-10')
+    QSAO=AccessRecord.objects.filter(date__year='1999')
+    QSAO=AccessRecord.objects.filter(date__month='7')
+    QSAO=AccessRecord.objects.filter(date__day='10')
+    QSAO=AccessRecord.objects.filter(author__in=('di','VK'))
+    QSAO=AccessRecord.objects.filter(author__regex='^V\w+')
+    QSAO=AccessRecord.objects.filter(date__year__lt='1999')
+    
+    
+    
     d={'QSAO':QSAO}
     return render(request,'display_access.html',d)
+
+
+
+
 
 
 def insert_topic(request):
