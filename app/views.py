@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from app.models import *
 from django.db.models.functions import Length
-
+from django.db.models import Q
 def display_topics(request):
     QSTO=Topic.objects.all()
     d={'QSTO':QSTO}
@@ -33,8 +33,12 @@ def display_webpages(request):
     QSWO=Webpage.objects.filter(url__endswith='in')
     QSWO=Webpage.objects.filter(url__contains='R')
     QSWO=Webpage.objects.exclude(url__contains='R')
+    QSWO=Webpage.objects.filter(Q(topic_name='Cricket') & Q(url__endswith='in'))
 
+    QSWO=Webpage.objects.all()
+    QSWO=Webpage.objects.filter(Q(name__contains='r') & Q(url__endswith='com'))
 
+    QSWO=Webpage.objects.filter(Q(topic_name='Cricket') | Q(name__contains='r'))
 
 
 
@@ -101,6 +105,32 @@ def insert_webpage(request):
 
 
 
+
+
+
+def update_webpage(request):
+    
+    #Webpage.objects.filter(topic_name='Foot Ball').update(name='Ronaldo')
+    #Webpage.objects.filter(name='virat').update(url='https://kohli.com')
+    #Webpage.objects.filter(name='Python').update(url='https://kohli.com')
+    #Webpage.objects.filter(name='virat').update(topic_name='Chess')
+    #Webpage.objects.filter(name='virat').update(topic_name='Boxing')
+    
+    #Webpage.objects.update_or_create(topic_name='Foot Ball',defaults={'name':'NeyMar'})
+    #Webpage.objects.update_or_create(topic_name='Volley Ball',defaults={'name':'NeyMar'})
+    
+    #RO=Topic.objects.get(topic_name='Rugby')
+    #Webpage.objects.update_or_create(name='dileep',defaults={'topic_name':RO})
+    
+    #Webpage.objects.update_or_create(name='Hardhik',defaults={'url':'https://Hardhik.com'})
+    CTO=Topic.objects.get(topic_name='Cricket')
+    Webpage.objects.update_or_create(name='Hardhik',defaults={'topic_name':CTO,'url':'https://Hardhik.com'})
+    
+    QSWO=Webpage.objects.all()
+
+    d={'QSWO':QSWO}
+
+    return render(request,'display_webpages.html',d)
 
 
 
